@@ -2,27 +2,27 @@
 
 GitHub Profile Analyser is a Flask-based web application that fetches and analyzes any GitHub user’s public profile using the GitHub REST API. It generates a recruiter-friendly summary showing top repositories, language usage, total stars, and profile activity — making it easy to evaluate a developer at a glance.
 
-🚀 Features
+ Features
 
-🔍 Search any GitHub username
+- Search any GitHub username
 
-📊 View detailed profile info (bio, followers, following, avatar, etc.)
+- View detailed profile info (bio, followers, following, avatar, etc.)
 
-⭐ Analyze repositories (stars, languages, total repos)
+- Analyze repositories (stars, languages, total repos)
 
-🧠 Automatic insights like:
+= Automatic insights like:
 
-Most used languages
+1.Most used languages
 
-Top 5 repositories
+2.Top 5 repositories
 
-Total star count
+3.Total star count
 
 🎨 Clean UI for a recruiter-style profile view
 
 ⚡ Powered by Flask + GitHub REST API
 
-🧰 Tech Stack
+Tech Stack
 
 Python
 
@@ -58,12 +58,6 @@ python app.py
 Open your browser and go to:
 
 http://127.0.0.1:5000
-
-🖼️ Screenshots (optional)
-
-You can add your own screenshots here later:
-
-![App Screenshot](images/screenshot.png)
 
 🛠️ How It Works
 

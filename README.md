@@ -22,7 +22,7 @@ GitHub Profile Analyser is a Flask-based web application that fetches and analyz
 
 ⚡ Powered by Flask + GitHub REST API
 
-Tech Stack
+***Tech Stack***
 
 Python
 
@@ -35,6 +35,7 @@ HTML / CSS
 Requests library
 
 📦 Installation
+
 1️⃣ Clone the repository
 git clone https://github.com/jothyshivani145/Github-profile-Analyser.git
 cd Github-profile-Analyser

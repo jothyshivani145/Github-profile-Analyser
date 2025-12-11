@@ -10,7 +10,7 @@ GitHub Profile Analyser is a Flask-based web application that fetches and analyz
 
 - Analyze repositories (stars, languages, total repos)
 
-= Automatic insights like:
+ Automatic insights like:
 
 1.Most used languages
 

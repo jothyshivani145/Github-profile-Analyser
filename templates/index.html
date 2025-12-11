@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Recruiter View</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #161b22;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        }
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: #e6edf3;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: #238636;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2ea043;
+        }
+        .error {
+            color: #f85149;
+            margin-bottom: 15px;
+        }
+        .profile-card, .stats-card, .repos-card {
+            background: #0d1117;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #30363d;
+        }
+        .profile-header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .profile-header img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+        .stat-grid {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            flex: 1;
+            min-width: 140px;
+            background: #161b22;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            text-align: center;
+        }
+        .repos-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .repos-list li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .language-tag {
+            display: inline-block;
+            background: #161b22;
+            border-radius: 999px;
+            padding: 3px 10px;
+            border: 1px solid #30363d;
+            font-size: 12px;
+            margin: 3px 3px 0 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>GitHub Recruiter View</h1>
+    <p>Type a GitHub username to see a recruiter-friendly summary of their profile.</p>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="e.g. torvalds, your-username" />
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if profile %}
+        <div class="profile-card">
+            <div class="profile-header">
+                <img src="{{ profile.avatar_url }}" alt="avatar" />
+                <div>
+                    <h2>{{ profile.name or profile.login }}</h2>
+                    <p>@{{ profile.login }}</p>
+                    {% if profile.bio %}
+                        <p>{{ profile.bio }}</p>
+                    {% endif %}
+                    <p>
+                        <a href="{{ profile.html_url }}" target="_blank">View on GitHub</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <h3>At a Glance</h3>
+            <div class="stat-grid">
+                <div class="stat">
+                    <strong>Total Repos</strong>
+                    <div>{{ analysis.total_repos }}</div>
+                </div>
+                <div class="stat">
+                    <strong>Total Stars</strong>
+                    <div>{{ analysis.total_stars }}</div>
+                </div>
+                <div class="stat">
+                    <strong>Followers</strong>
+                    <div>{{ profile.followers }}</div>
+                </div>
+                <div class="stat">
+                    <strong>Following</strong>
+                    <div>{{ profile.following }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <h3>Languages Used</h3>
+            {% if analysis.languages %}
+                {% for lang, count in analysis.languages.items() %}
+                    <span class="language-tag">{{ lang }} • {{ count }} repos</span>
+                {% endfor %}
+            {% else %}
+                <p>No language data available.</p>
+            {% endif %}
+        </div>
+
+        <div class="repos-card">
+            <h3>Top Repositories (by stars)</h3>
+            <div class="repos-list">
+                {% if analysis.top_repos %}
+                    <ul>
+                        {% for repo in analysis.top_repos %}
+                            <li>
+                                <a href="{{ repo.html_url }}" target="_blank">
+                                    {{ repo.name }}
+                                </a>
+                                <br>
+                                ⭐ {{ repo.stargazers_count }} |
+                                🧑‍💻 {{ repo.language or 'Other' }}
+                                {% if repo.description %}
+                                    <br>
+                                    <small>{{ repo.description }}</small>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No repositories found.</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
